@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# React.js Development Environment with DDEV and PM2
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This DDEV setup provides a streamlined development environment for building React.js applications with Node.js and PM2. The setup includes a PHP-based web environment, a MariaDB database, and integrates PM2 to manage your React.js development server.
 
-## Available Scripts
+## Project Setup: `react-ddev-setup`
 
-In the project directory, you can run:
+### Key Features:
+- **PHP 8.2** web server (nginx-fpm)
+- **MariaDB 10.4** database
+- **Node.js 18** for React.js app development
+- **PM2** to run and manage the React.js development server
+- **Yarn** for package management
+- **Auto-generation of React.js app** if no existing `package.json` is found
+- Automatically starts the React.js development server on port 3000.
 
-### `yarn start`
+### How to Use:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Clone this repository** or create a new project folder.
+   
+2. **Install DDEV**:
+   - Follow the instructions for installing DDEV from [here](https://ddev.readthedocs.io/en/stable/#installation).
+   
+3. **Start DDEV**:
+   - Run `ddev start` in the terminal from your project folder.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+4. **React.js App Initialization**:
+   - If no `package.json` file is found, the setup will automatically generate a React.js app using `create-react-app`.
 
-### `yarn test`
+5. **Access Your Development Server**:
+   - Once DDEV has finished setting up, access your React.js app via `https://react-ddev-setup.ddev.site:3000`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### PM2 Commands:
 
-### `yarn build`
+PM2 helps manage the React.js development server and can also be used to monitor the application or restart it if needed. Below are some useful PM2 commands:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Start the app**:
+  - `pm2 start "yarn start --host 0.0.0.0 --port 3000"`  
+    Starts the React.js development server and binds it to port 3000.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **List all processes**:
+  - `pm2 list`  
+    Displays all the processes managed by PM2.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Monitor the app in real-time**:
+  - `pm2 monit`  
+    Opens a real-time monitor of all your applications, showing CPU and memory usage.
 
-### `yarn eject`
+- **Restart the app**:
+  - `pm2 restart <app_name_or_id>`  
+    Restarts the React.js development server (replace `<app_name_or_id>` with the actual name or ID of your app, for example, `pm2 restart 0`).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Stop the app**:
+  - `pm2 stop <app_name_or_id>`  
+    Stops the running React.js development server.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Delete the app from PM2**:
+  - `pm2 delete <app_name_or_id>`  
+    Removes the app from PM2's process list.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **Save the current PM2 process list**:
+  - `pm2 save`  
+    Saves the current list of PM2 processes, which can be restored upon system reboot.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **Startup Script**:
+  - `pm2 startup`  
+    Generates a startup script to run PM2 and its processes automatically when the system reboots. This is useful for keeping the React.js app running after a restart.
 
-## Learn More
+- **View logs**:
+  - `pm2 logs`  
+    Displays the logs of all running PM2 processes. You can also specify a specific app to view logs for, like `pm2 logs <app_name_or_id>`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Check the status of the app**:
+  - `pm2 status <app_name_or_id>`  
+    Provides the status of a specific app (whether it’s online, stopped, etc.).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Graceful restart**:
+  - `pm2 reload <app_name_or_id>`  
+    Restarts the application gracefully, which helps avoid downtime.
 
-### Code Splitting
+- **Clear all logs**:
+  - `pm2 flush`  
+    Clears all logs from PM2.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Troubleshooting:
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- If you encounter issues with starting PM2, ensure you have `yarn` installed inside the DDEV container by running `ddev ssh` and executing `yarn --version`.
+- For any problems related to React.js, check the generated logs or run `ddev logs` to debug.
